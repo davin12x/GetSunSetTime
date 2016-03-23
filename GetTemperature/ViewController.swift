@@ -9,17 +9,31 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    @IBOutlet var TempLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    
+    @IBAction func onUpdateButtonPressed(sender: AnyObject) {
+        
+        let services = HttpServices()
+        services.getTemp { (temp, success) in
+            if success{
+                dispatch_async(dispatch_get_main_queue(), { 
+                     self.TempLabel.text = temp
+                })
+            }
+            else{
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.TempLabel.text = temp
+                })
+            }
+        }
     }
-
-
+    
+    
 }
 
